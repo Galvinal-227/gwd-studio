@@ -1,0 +1,67 @@
+export const services = [
+  {
+    id: '01',
+    title: 'Landing Page',
+    description: 'Single page website untuk promosi produk, event, atau campaign.',
+    features: [
+      'Desain custom',
+      'Responsive di semua device',
+      'Form kontak / order',
+      'Optimasi kecepatan',
+      'SEO basic',
+    ],
+    timeline: '1-2 minggu',
+  },
+  {
+    id: '02',
+    title: 'Company Profile',
+    description: 'Website multi-halaman untuk perusahaan, organisasi, atau brand.',
+    features: [
+      'Hingga 10 halaman',
+      'Desain premium',
+      'CMS untuk edit konten',
+      'Integrasi sosial media',
+      'SEO lengkap',
+    ],
+    timeline: '2-4 minggu',
+  },
+  {
+    id: '03',
+    title: 'E-Commerce',
+    description: 'Toko online lengkap dengan katalog produk dan pembayaran.',
+    features: [
+      'Katalog produk',
+      'Keranjang & checkout',
+      'Payment gateway',
+      'Dashboard admin',
+      'Manajemen stok',
+    ],
+    timeline: '4-8 minggu',
+  },
+  {
+    id: '04',
+    title: 'Web Application',
+    description: 'Aplikasi web custom dengan fitur kompleks sesuai kebutuhan.',
+    features: [
+      'User authentication',
+      'Database & backend',
+      'API integration',
+      'Dashboard admin',
+      'Deployment & setup',
+    ],
+    timeline: 'Custom',
+  },
+  {
+    id: '05',
+    title: 'Maintenance & Upgrade',
+    description: 'Perbaikan, update, atau pengembangan fitur website existing.',
+    features: [
+      'Bug fixing',
+      'Update keamanan',
+      'Tambah fitur baru',
+      'Optimasi performa',
+      'Backup & recovery',
+    ],
+    timeline: 'Flexible',
+  },
+];
