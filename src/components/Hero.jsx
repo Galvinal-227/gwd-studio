@@ -21,19 +21,14 @@ const Hero = () => {
 
   return (
     <section ref={heroRef} className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
-      {/* Background dengan efek gelap dan gradien */}
-      <div className="absolute inset-0 bg-[#050b1a]">
-        {/* Radial gradients */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_40%,rgba(30,90,255,0.25)_0%,transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(10,150,250,0.15)_0%,transparent_45%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(100,50,255,0.10)_0%,transparent_40%)]" />
-      </div>
+      {/* Background gelap polos */}
+      <div className="absolute inset-0 bg-[#050b1a]" />
 
       {/* Background PNG - ganti src dengan path gambar Anda */}
       <img 
         src="/path/to/your/background-image.png" 
         alt="Background"
-        className="absolute top-[12%] left-0 w-full pointer-events-none z-1 opacity-50 hidden lg:block"
+        className="absolute top-[12%] left-0 w-full pointer-events-none z-1 hidden lg:block"
         style={{ objectFit: 'contain' }}
       />
 
@@ -41,6 +36,15 @@ const Hero = () => {
       <div className="absolute bottom-0 left-0 w-[30%] h-[130px] bg-white z-10 rounded-tr-[48px] lg:block hidden">
         <div className="absolute bottom-0 left-full w-[48px] h-[48px] bg-white [mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))] [-webkit-mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))]" />
         <div className="absolute bottom-full left-0 w-[48px] h-[48px] bg-white [mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))] [-webkit-mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))]" />
+        
+        {/* Teks berjalan di area cutout */}
+        <div className="absolute bottom-4 left-4 right-4 overflow-hidden">
+          <div className="animate-marquee whitespace-nowrap">
+            <span className="text-[#050b1a] font-bold text-sm tracking-widest">
+              GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • 
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Container */}
@@ -115,6 +119,21 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* CSS untuk animasi marquee */}
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-marquee {
+          animation: marquee 15s linear infinite;
+        }
+      `}</style>
     </section>
   );
 };
