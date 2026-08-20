@@ -21,68 +21,52 @@ const Hero = () => {
 
   return (
     <section ref={heroRef} className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
-      {/* Background gelap polos */}
-      <div className="absolute inset-0 bg-[#050b1a]" />
+      {/* Background putih dengan grid pattern */}
+      <div className="absolute inset-0 bg-white">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:40px_40px] opacity-50"></div>
+      </div>
 
-      {/* Background PNG - ganti src dengan path gambar Anda */}
-      <img 
-        src="/path/to/your/background-image.png" 
-        alt="Background"
-        className="absolute top-[12%] left-0 w-full pointer-events-none z-1 hidden lg:block"
-        style={{ objectFit: 'contain' }}
-      />
-
-      {/* Cutout shape di kiri bawah */}
-      <div className="absolute bottom-0 left-0 w-[30%] h-[130px] bg-white z-10 rounded-tr-[48px] lg:block hidden">
-        <div className="absolute bottom-0 left-full w-[48px] h-[48px] bg-white [mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))] [-webkit-mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))]" />
-        <div className="absolute bottom-full left-0 w-[48px] h-[48px] bg-white [mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))] [-webkit-mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))]" />
-        
-        {/* Teks berjalan di area cutout */}
-        <div className="absolute bottom-4 left-4 right-4 overflow-hidden">
-          <div className="animate-marquee whitespace-nowrap">
-            <span className="text-[#050b1a] font-bold font-3xl text-sm tracking-widest">
-              GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • 
-            </span>
-          </div>
+      {/* Teks berjalan di bawah */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden bg-black py-3 z-10">
+        <div className="animate-marquee whitespace-nowrap">
+          <span className="text-white font-black text-2xl md:text-3xl lg:text-4xl tracking-widest mx-4">
+            GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • 
+          </span>
         </div>
       </div>
 
       {/* Container */}
       <div className="container relative mx-auto px-6 md:px-8 lg:px-12 max-w-7xl z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Kolom Kiri - Text Content */}
-          <div className="text-center lg:text-left pb-0 lg:pb-16">
-            <div className="hero-badge inline-flex items-center gap-2 px-3 py-1 bg-white/10 border border-white/10 rounded-full text-xs uppercase tracking-widest text-white/50">
+          <div>
+            <div className="hero-badge inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-200 rounded-full text-xs uppercase tracking-widest text-gray-600">
               <span className="w-2 h-2 rounded-full bg-green-500"></span>
               {t('hero_available')}
             </div>
-            <h1 className="hero-headline mt-6 text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold leading-[1.1] tracking-tight text-white">
-              <span className="block font-normal">{t('hero_we_build')}</span>
-              <span className="block">
-                <span className="bg-gradient-to-r from-[#f7971e] to-[#ffd200] bg-clip-text text-transparent">
-                  {t('hero_websites')}
-                </span>
-              </span>
-              <span className="block font-normal text-white/70">{t('hero_that_people')}</span>
-              <span className="block font-normal">{t('hero_remember')}</span>
+            <h1 className="hero-headline mt-8 text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-bold leading-[0.95] tracking-tight">
+              <span className="block">{t('hero_we_build')}</span>
+              <span className="block">{t('hero_websites')}</span>
+              <span className="block text-gray-400">{t('hero_that_people')}</span>
+              <span className="block">{t('hero_remember')}</span>
             </h1>
-            <p className="hero-sub mt-6 text-base md:text-lg text-white/50 max-w-lg mx-auto lg:mx-0">
+            <p className="hero-sub mt-8 text-lg md:text-xl text-gray-600 max-w-lg">
               {t('hero_subtitle')}
             </p>
-            <div className="hero-cta mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
-              <a href="#contact" className="inline-flex items-center gap-2 bg-white text-[#050b1a] px-6 py-3 uppercase tracking-wider text-sm font-medium hover:bg-white/90 transition-colors rounded-full">
+            <div className="hero-cta mt-10 flex flex-wrap gap-4">
+              <a href="#contact" className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 uppercase tracking-wider text-sm font-medium hover:bg-gray-800 transition-colors">
                 {t('hero_start_project')} <FiArrowRight className="w-4 h-4" />
               </a>
-              <a href="#work" className="inline-flex items-center gap-2 border border-white/20 text-white px-6 py-3 uppercase tracking-wider text-sm font-medium hover:bg-white/10 transition-colors rounded-full">
+              <a href="#work" className="inline-flex items-center gap-2 border border-gray-300 text-black px-6 py-3 uppercase tracking-wider text-sm font-medium hover:bg-gray-100 transition-colors">
                 {t('hero_view_work')}
               </a>
             </div>
           </div>
 
-          {/* Kolom Tengah - Visual / Preview */}
-          <div className="hero-visual w-full max-w-[560px] mx-auto lg:mx-0">
-            <div className="bg-white/5 backdrop-blur-[20px] border border-white/10 rounded-[20px] p-4 shadow-2xl">
-              <div className="bg-gray-800/50 rounded-lg aspect-[16/10] overflow-hidden">
+          {/* Kolom Kanan - Visual / Preview dengan border hitam tebal */}
+          <div className="hero-visual hidden lg:block">
+            <div className="bg-white border-4 border-black rounded-xl p-4 shadow-2xl">
+              <div className="bg-gray-100 rounded-lg aspect-[16/10] overflow-hidden">
                 <iframe
                   src="https://galvinalfito.my.id"
                   title="Website preview"
@@ -97,25 +81,9 @@ const Hero = () => {
                   <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
                   <span className="w-3 h-3 rounded-full bg-green-400"></span>
                 </div>
-                <span className="text-xs text-white/50">galvinalfito.my.id</span>
+                <span className="text-xs text-gray-500">galvinalfito.my.id</span>
               </div>
             </div>
-          </div>
-
-          {/* Kolom Kanan - Stats */}
-          <div className="text-center lg:text-right max-w-[280px] mx-auto lg:mx-0 lg:justify-self-end pb-0 lg:pb-10">
-            <p className="text-white/50 text-sm md:text-base leading-relaxed mb-4">
-              {t('hero_stats_text') || 'Koleksi eksklusif dengan desain modern dan kualitas terbaik.'}
-            </p>
-            <div>
-              <div className="text-4xl md:text-5xl font-light text-white leading-none">
-                500+
-              </div>
-              <div className="text-white/70 font-semibold text-sm md:text-base mt-1">
-                {t('hero_stats_label') || 'Produk Tersedia'}
-              </div>
-            </div>
-            <div className="w-10 h-[2px] bg-gradient-to-r from-[#f7971e] to-[#ffd200] rounded mx-auto lg:ml-auto mt-4" />
           </div>
         </div>
       </div>
@@ -131,7 +99,7 @@ const Hero = () => {
           }
         }
         .animate-marquee {
-          animation: marquee 15s linear infinite;
+          animation: marquee 20s linear infinite;
         }
       `}</style>
     </section>
