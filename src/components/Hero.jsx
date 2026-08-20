@@ -26,12 +26,18 @@ const Hero = () => {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:40px_40px] opacity-50"></div>
       </div>
 
-      {/* Teks berjalan di bawah */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden bg-black py-3 z-10">
-        <div className="animate-marquee whitespace-nowrap">
-          <span className="text-white font-black text-2xl md:text-3xl lg:text-4xl tracking-widest mx-4">
-            GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • 
-          </span>
+      {/* Cutout shape di kiri bawah dengan border hitam tebal */}
+      <div className="absolute bottom-0 left-0 w-[30%] h-[130px] bg-white border-4 border-black z-10 rounded-tr-[48px] hidden lg:block">
+        <div className="absolute bottom-0 left-full w-[48px] h-[48px] bg-white border-4 border-black border-l-0 border-b-0 [mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))] [-webkit-mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))]" />
+        <div className="absolute bottom-full left-0 w-[48px] h-[48px] bg-white border-4 border-black border-r-0 border-t-0 [mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))] [-webkit-mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))]" />
+        
+        {/* Teks berjalan di area cutout */}
+        <div className="absolute inset-0 flex items-center overflow-hidden px-4">
+          <div className="animate-marquee whitespace-nowrap">
+            <span className="text-black font-black text-2xl md:text-3xl lg:text-4xl tracking-widest">
+              GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • 
+            </span>
+          </div>
         </div>
       </div>
 
