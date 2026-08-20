@@ -59,14 +59,6 @@ const Hero = () => {
             <p className="hero-sub mt-8 text-lg md:text-xl text-gray-600 max-w-lg">
               {t('hero_subtitle')}
             </p>
-            <div className="hero-cta mt-10 flex flex-wrap gap-4">
-              <a href="#contact" className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 uppercase tracking-wider text-sm font-medium hover:bg-gray-800 transition-colors">
-                {t('hero_start_project')} <FiArrowRight className="w-4 h-4" />
-              </a>
-              <a href="#work" className="inline-flex items-center gap-2 border border-gray-300 text-black px-6 py-3 uppercase tracking-wider text-sm font-medium hover:bg-gray-100 transition-colors">
-                {t('hero_view_work')}
-              </a>
-            </div>
           </div>
 
           {/* Kolom Kanan - Visual / Preview dengan border hitam tebal */}
