@@ -40,7 +40,7 @@ const Hero = () => {
         {/* Teks berjalan di area cutout */}
         <div className="absolute bottom-4 left-4 right-4 overflow-hidden">
           <div className="animate-marquee whitespace-nowrap">
-            <span className="text-[#050b1a] font-bold text-sm tracking-widest">
+            <span className="text-[#050b1a] font-bold font-3xl text-sm tracking-widest">
               GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • 
             </span>
           </div>
