@@ -26,26 +26,32 @@ const Hero = () => {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:40px_40px] opacity-50"></div>
       </div>
 
-      {/* Cutout shape di kiri bawah dengan border hitam tebal */}
-      <div className="absolute bottom-0 left-0 w-[30%] h-[130px] bg-white border-4 border-black z-10 rounded-tr-[48px] hidden lg:block">
-        <div className="absolute bottom-0 left-full w-[48px] h-[48px] bg-white border-4 border-black border-l-0 border-b-0 [mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))] [-webkit-mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))]" />
-        <div className="absolute bottom-full left-0 w-[48px] h-[48px] bg-white border-4 border-black border-r-0 border-t-0 [mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))] [-webkit-mask-image:radial-gradient(circle_at_100%_0%,transparent_48px,black_calc(48px+0.5px))]" />
-        
-        {/* Teks berjalan di area cutout */}
-        <div className="absolute inset-0 flex items-center overflow-hidden px-4">
-          <div className="animate-marquee whitespace-nowrap">
-            <span className="text-black font-black text-2xl md:text-3xl lg:text-4xl tracking-widest">
+      {/* Card Border Only - tanpa background */}
+      <div 
+        className="absolute bottom-0 left-0 w-[48%] h-[140px] z-40 hidden lg:flex items-center overflow-hidden"
+        style={{
+          border: '4px solid black',
+          borderBottom: 'none',
+          borderLeft: 'none',
+          borderTopRightRadius: '24px',
+          background: 'transparent'
+        }}
+      >
+        {/* Teks Berjalan (Marquee) di dalam Card */}
+        <div className="flex items-center overflow-hidden w-full py-2 px-6">
+          <div className="animate-marquee whitespace-nowrap flex">
+            <span className="text-black font-black text-2xl md:text-3xl lg:text-4xl tracking-wider">
               GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • GWD STUDIO • 
             </span>
           </div>
         </div>
       </div>
 
-      {/* Container */}
+      {/* Container Utama */}
       <div className="container relative mx-auto px-6 md:px-8 lg:px-12 max-w-7xl z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Kolom Kiri - Text Content */}
-          <div>
+          <div className="pb-44 lg:pb-52">
             <div className="hero-badge inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-200 rounded-full text-xs uppercase tracking-widest text-gray-600">
               <span className="w-2 h-2 rounded-full bg-green-500"></span>
               {t('hero_available')}
@@ -61,8 +67,8 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* Kolom Kanan - Visual / Preview dengan border hitam tebal */}
-          <div className="hero-visual hidden lg:block">
+          {/* Kolom Kanan - Visual / Preview + CTA */}
+          <div className="hero-visual hidden lg:block pb-36">
             <div className="bg-white border-4 border-black rounded-xl p-4 shadow-2xl">
               <div className="bg-gray-100 rounded-lg aspect-[16/10] overflow-hidden">
                 <iframe
@@ -82,6 +88,16 @@ const Hero = () => {
                 <span className="text-xs text-gray-500">galvinalfito.my.id</span>
               </div>
             </div>
+            
+            {/* CTA Buttons */}
+            <div className="hero-cta mt-6 flex flex-wrap gap-4">
+              <a href="#contact" className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 uppercase tracking-wider text-sm font-medium hover:bg-gray-800 transition-colors">
+                {t('hero_start_project')} <FiArrowRight className="w-4 h-4" />
+              </a>
+              <a href="#work" className="inline-flex items-center gap-2 border border-gray-300 text-black px-6 py-3 uppercase tracking-wider text-sm font-medium hover:bg-gray-100 transition-colors">
+                {t('hero_view_work')}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -97,7 +113,7 @@ const Hero = () => {
           }
         }
         .animate-marquee {
-          animation: marquee 20s linear infinite;
+          animation: marquee 18s linear infinite;
         }
       `}</style>
     </section>
