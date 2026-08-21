@@ -7,8 +7,8 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-white border-t border-gray-200">
-      <div className="container mx-auto px-6 md:px-8 lg:px-12 max-w-7xl py-16 md:py-20">
+    <footer className="relative bg-white border-t border-gray-200" style={{ zIndex: 20, backgroundColor: '#FFFFFF' }}>
+      <div className="container mx-auto px-6 md:px-8 lg:px-12 max-w-[1400px] py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <h3 className="text-2xl font-heading font-bold">GWD</h3>
@@ -43,7 +43,6 @@ const Footer = () => {
         <div className="mt-16 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-500">© {new Date().getFullYear()} GWD. {t('footer_rights')}</p>
           
-          {/* Link ke website pribadi */}
           <a 
             href="https://galvinalfito.my.id" 
             target="_blank" 
@@ -51,7 +50,7 @@ const Footer = () => {
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors group"
           >
             {t('footer_made')}
-            <FiExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <FiExternalLink className="w-3 h-3" />
           </a>
         </div>
       </div>
