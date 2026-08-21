@@ -1,33 +1,39 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FiCheck, FiMessageCircle, FiMail, FiArrowRight } from 'react-icons/fi';
+import { FiCheck, FiMessageCircle, FiMail } from 'react-icons/fi';
 import { services } from '../data/pricing';
 import SectionHeader from './SectionHeader';
 import { contactInfo } from '../data/contact';
+import { useTranslation } from '../hooks/useTranslation';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Pricing = () => {
   const cardsRef = useRef(null);
+  const { t } = useTranslation();
 
   useLayoutEffect(() => {
-    const cards = cardsRef.current.querySelectorAll('.pricing-card');
-    gsap.fromTo(cards,
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.1,
-        scrollTrigger: { trigger: cardsRef.current, start: 'top 80%' }
-      }
-    );
+    const ctx = gsap.context(() => {
+      const cards = cardsRef.current.querySelectorAll('.pricing-card');
+      gsap.fromTo(cards,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power4.out',
+          stagger: 0.1,
+          scrollTrigger: { trigger: cardsRef.current, start: 'top 80%' }
+        }
+      );
+    }, cardsRef);
+
+    return () => ctx.revert();
   }, []);
 
   const handleWhatsApp = (service) => {
-    const phoneNumber = contactInfo.whatsapp || contactInfo.phone || '6281234567890';
+    const phoneNumber = contactInfo.whatsapp || contactInfo.phone || '6285801003353';
     const message = `Halo, saya tertarik dengan layanan ${service.title}.\n\nBisa info lebih lanjut tentang estimasi biaya dan proses pengerjaannya?`;
     const url = `https://wa.me/${phoneNumber.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
@@ -42,27 +48,27 @@ const Pricing = () => {
 
   return (
     <section id="pricing" className="py-24 md:py-32 lg:py-40 bg-offwhite">
-      <div className="container mx-auto px-6 md:px-8 lg:px-12 max-w-7xl">
+      <div className="container mx-auto px-6 md:px-8 lg:px-12 max-w-[1400px]">
         <SectionHeader 
-          eyebrow="pricing_eyebrow"
-          title="pricing_title"
-          description="pricing_description"
+          eyebrowKey="pricing_eyebrow"
+          titleKey="pricing_title"
+          descriptionKey="pricing_description"
         />
 
         {/* Info banner */}
         <div className="mt-10 bg-black text-white rounded-lg p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-sm uppercase tracking-wider text-gray-400">Konsultasi gratis</p>
-            <p className="text-lg font-semibold mt-1">Diskusikan project kamu, saya bantu estimasi biayanya</p>
+            <p className="text-sm uppercase tracking-wider text-gray-400">{t('pricing_free_consultation')}</p>
+            <p className="text-lg font-semibold mt-1">{t('pricing_consultation_text')}</p>
           </div>
           <a
-            href={`https://wa.me/${(contactInfo.whatsapp || '6281234567890').replace(/\D/g, '')}?text=${encodeURIComponent('Halo, saya ingin konsultasi tentang project website.')}`}
+            href={`https://wa.me/${(contactInfo.whatsapp || '6285801003353').replace(/\D/g, '')}?text=${encodeURIComponent('Halo, saya ingin konsultasi tentang project website.')}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-md text-sm font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap"
+            className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-md text-sm font-semibold hover:bg-gray-200 transition-colors whitespace-nowrap"
           >
             <FiMessageCircle className="w-4 h-4" />
-            Chat Sekarang
+            {t('pricing_chat_now')}
           </a>
         </div>
 
@@ -100,14 +106,14 @@ const Pricing = () => {
                   className="flex-1 inline-flex items-center justify-center gap-2 bg-black text-white px-4 py-2.5 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors"
                 >
                   <FiMessageCircle className="w-4 h-4" />
-                  Tanya via WA
+                  {t('pricing_tanya_wa')}
                 </button>
                 <button
                   onClick={() => handleEmail(service)}
                   className="flex-1 inline-flex items-center justify-center gap-2 border border-gray-300 text-gray-700 px-4 py-2.5 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors"
                 >
                   <FiMail className="w-4 h-4" />
-                  Email
+                  {t('pricing_email')}
                 </button>
               </div>
             </div>
@@ -117,16 +123,16 @@ const Pricing = () => {
         {/* Bottom note */}
         <div className="mt-12 text-center">
           <p className="text-gray-500 text-sm">
-            💡 Tidak yakin layanan mana yang cocok?{' '}
+            {t('pricing_note')}{' '}
             <a 
-              href={`https://wa.me/${(contactInfo.whatsapp || '6281234567890').replace(/\D/g, '')}?text=${encodeURIComponent('Halo, saya bingung pilih layanan yang cocok untuk kebutuhan saya. Bisa bantu?')}`}
+              href={`https://wa.me/${(contactInfo.whatsapp || '6285801003353').replace(/\D/g, '')}?text=${encodeURIComponent('Halo, saya bingung pilih layanan yang cocok. Bisa bantu?')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-black font-medium"
             >
-              Chat saya
+              {t('pricing_chat_me')}
             </a>
-            , nanti saya bantu rekomendasiin.
+            , {t('pricing_recommend')}
           </p>
         </div>
       </div>
