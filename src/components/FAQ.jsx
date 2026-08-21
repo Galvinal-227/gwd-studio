@@ -1,12 +1,22 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiPlus, FiMinus } from 'react-icons/fi';
-import { faqs } from '../data/faq';
 import SectionHeader from './SectionHeader';
 import { useTranslation } from '../hooks/useTranslation';
 
 const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState(0); // Auto-open first item
+  const [openIndex, setOpenIndex] = useState(0);
+
+  const faqKeys = [
+    { q: 'faq_q1', a: 'faq_a1' },
+    { q: 'faq_q2', a: 'faq_a2' },
+    { q: 'faq_q3', a: 'faq_a3' },
+    { q: 'faq_q4', a: 'faq_a4' },
+    { q: 'faq_q5', a: 'faq_a5' },
+    { q: 'faq_q6', a: 'faq_a6' },
+  ];
+
+  const { t } = useTranslation();
 
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -22,7 +32,7 @@ const FAQ = () => {
           align="center"
         />
         <div className="mt-16 space-y-4">
-          {faqs.map((faq, index) => (
+          {faqKeys.map((faq, index) => (
             <div key={index} className={`border-b border-gray-200 ${openIndex === index ? 'bg-gray-50' : ''} transition-colors`}>
               <button
                 onClick={() => toggle(index)}
@@ -30,7 +40,7 @@ const FAQ = () => {
                 aria-expanded={openIndex === index}
               >
                 <span className={`text-lg md:text-xl font-medium ${openIndex === index ? 'text-black' : 'text-gray-700'} group-hover:text-black transition-colors`}>
-                  {faq.question}
+                  {t(faq.q)}
                 </span>
                 <span className="flex-shrink-0 ml-4">
                   {openIndex === index ? (
@@ -50,7 +60,7 @@ const FAQ = () => {
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className="overflow-hidden"
                   >
-                    <p className="pb-6 px-4 text-gray-600">{faq.answer}</p>
+                    <p className="pb-6 px-4 text-gray-600">{t(faq.a)}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
