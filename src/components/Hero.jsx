@@ -68,7 +68,6 @@ const Hero = () => {
         duration: 0.8,
       }, '-=0.5');
 
-      // Animasi kedip setelah headline muncul
       gsap.to('.hero-blink-text', {
         opacity: 0.3,
         duration: 0.8,
@@ -116,17 +115,14 @@ const Hero = () => {
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#f5f5f5_1px,transparent_1px),linear-gradient(to_bottom,#f5f5f5_1px,transparent_1px)] bg-[size:60px_60px] opacity-30"></div>
         
-        {/* Vertical guide lines */}
         <div className="absolute left-[25%] top-0 w-px h-full bg-gray-100 hidden lg:block"></div>
         <div className="absolute left-[50%] top-0 w-px h-full bg-gray-100 hidden lg:block"></div>
         <div className="absolute left-[75%] top-0 w-px h-full bg-gray-100 hidden lg:block"></div>
       </div>
 
-      {/* Container utama */}
       <div className="container relative mx-auto px-6 md:px-8 lg:px-12 max-w-[1400px] z-10 flex-1 flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center pt-28 lg:pt-24 pb-16 lg:pb-24">
           
-          {/* KOLOM KIRI */}
           <div className="lg:col-span-6">
             <div className="hero-editorial-label flex items-center gap-4 mb-6 lg:mb-8">
               <span className="w-8 h-px bg-black"></span>
@@ -182,7 +178,6 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* KOLOM KANAN - Preview */}
           <div className="lg:col-span-6 relative">
             <div className="hero-micro-info absolute -top-8 -left-2 hidden lg:flex items-center gap-2 text-[10px] uppercase tracking-widest text-gray-400">
               <span className="text-black font-bold">01</span>
@@ -225,7 +220,6 @@ const Hero = () => {
               <span>Interaction</span>
             </div>
 
-            {/* CTA Mobile */}
             <div className="hero-cta mt-6 flex md:hidden flex-col gap-3">
               <a 
                 href="#contact" 
@@ -246,29 +240,29 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* MARQUEE */}
+      {/* MARQUEE - SEAMLESS */}
       <div className="hero-marquee relative border-t border-b border-gray-200 overflow-hidden py-3 bg-white">
-        <div className="flex whitespace-nowrap animate-marquee-slow">
-          {[0, 1].map((i) => (
-            <div key={i} className="flex items-center">
-              <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">
-                GWD STUDIO
-              </span>
-              <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
-              <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">
-                WEB DESIGN
-              </span>
-              <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
-              <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">
-                DEVELOPMENT
-              </span>
-              <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
-              <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">
-                DIGITAL EXPERIENCE
-              </span>
-              <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
-            </div>
-          ))}
+        <div className="hero-marquee-track">
+          <div className="hero-marquee-content">
+            <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">GWD STUDIO</span>
+            <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">WEB DESIGN</span>
+            <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">DEVELOPMENT</span>
+            <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">DIGITAL EXPERIENCE</span>
+            <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
+          </div>
+          <div className="hero-marquee-content" aria-hidden="true">
+            <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">GWD STUDIO</span>
+            <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">WEB DESIGN</span>
+            <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">DEVELOPMENT</span>
+            <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">DIGITAL EXPERIENCE</span>
+            <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
+          </div>
         </div>
       </div>
 
@@ -281,12 +275,19 @@ const Hero = () => {
       </div>
 
       <style>{`
-        @keyframes marqueeSlow {
+        @keyframes marqueeScroll {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
-        .animate-marquee-slow {
-          animation: marqueeSlow 30s linear infinite;
+        .hero-marquee-track {
+          display: flex;
+          width: max-content;
+          animation: marqueeScroll 20s linear infinite;
+        }
+        .hero-marquee-content {
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
         }
       `}</style>
     </section>
