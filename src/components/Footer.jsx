@@ -8,7 +8,7 @@ const Footer = () => {
 
   return (
     <footer 
-      className="relative bg-white border-t border-gray-200 rounded-b-[80px] overflow-hidden"
+      className="relative bg-white border-t border-gray-200 rounded-b-[60px] overflow-hidden"
       style={{ zIndex: 20, backgroundColor: '#FFFFFF' }}
     >
       <div className="container mx-auto px-6 md:px-8 lg:px-12 max-w-[1400px] py-16 md:py-20 pb-20 md:pb-24">
