@@ -14,7 +14,6 @@ const FooterReveal = () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
-      // Tanpa animasi untuk user yang prefer reduced motion
       gsap.set(typographyRef.current, { opacity: 1, y: 0, scale: 1 });
       gsap.set(metaRef.current, { opacity: 1 });
       gsap.set(lineRef.current, { scaleX: 1 });
@@ -31,7 +30,6 @@ const FooterReveal = () => {
         }
       });
 
-      // Typography muncul dari balik footer
       tl.fromTo(typographyRef.current,
         {
           yPercent: 45,
@@ -50,7 +48,6 @@ const FooterReveal = () => {
         0
       );
 
-      // Metadata muncul lebih lambat
       tl.fromTo(metaRef.current,
         {
           y: 20,
@@ -65,7 +62,6 @@ const FooterReveal = () => {
         0.6
       );
 
-      // Garis horizontal melebar
       tl.fromTo(lineRef.current,
         {
           scaleX: 0,
@@ -78,7 +74,6 @@ const FooterReveal = () => {
         0.3
       );
 
-      // Parallax subtle - typography bergerak lebih lambat dari scroll
       gsap.to(typographyRef.current, {
         yPercent: -12,
         ease: 'none',
@@ -98,13 +93,13 @@ const FooterReveal = () => {
     <div
       ref={sectionRef}
       className="footer-reveal-layer bg-[#0A0A0A] relative overflow-hidden"
-      style={{ height: '55vh' }}
+      style={{ height: '35vh' }}
     >
       {/* Thin borders */}
       <div className="absolute top-0 left-0 right-0 h-px bg-white/10"></div>
       <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10"></div>
 
-      {/* Vertical guides sangat subtle */}
+      {/* Vertical guides */}
       <div className="absolute left-1/4 top-0 bottom-0 w-px bg-white/5 hidden md:block"></div>
       <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/5 hidden md:block"></div>
       <div className="absolute left-3/4 top-0 bottom-0 w-px bg-white/5 hidden md:block"></div>
@@ -116,7 +111,7 @@ const FooterReveal = () => {
       >
         <h2
           className="font-heading font-bold text-white select-none whitespace-nowrap leading-none tracking-tight"
-          style={{ fontSize: 'clamp(5rem, 18vw, 20rem)' }}
+          style={{ fontSize: 'clamp(3rem, 12vw, 14rem)' }}
         >
           GWD<span className="text-white/30">.</span>
         </h2>
