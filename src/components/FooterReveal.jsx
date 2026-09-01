@@ -93,7 +93,7 @@ const FooterReveal = () => {
     <div
       ref={sectionRef}
       className="footer-reveal-layer bg-[#0A0A0A] relative overflow-hidden"
-      style={{ height: '35vh' }}
+      style={{ height: '75vh' }}
     >
       {/* Thin borders */}
       <div className="absolute top-0 left-0 right-0 h-px bg-white/10"></div>
