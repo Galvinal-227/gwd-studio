@@ -7,8 +7,11 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="relative bg-white border-t border-gray-200" style={{ zIndex: 20, backgroundColor: '#FFFFFF' }}>
-      <div className="container mx-auto px-6 md:px-8 lg:px-12 max-w-[1400px] py-16 md:py-20">
+    <footer 
+      className="relative bg-white border-t border-gray-200 rounded-b-[80px] overflow-hidden"
+      style={{ zIndex: 20, backgroundColor: '#FFFFFF' }}
+    >
+      <div className="container mx-auto px-6 md:px-8 lg:px-12 max-w-[1400px] py-16 md:py-20 pb-20 md:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <h3 className="text-2xl font-heading font-bold">GWD</h3>
