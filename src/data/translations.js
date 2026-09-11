@@ -13,13 +13,15 @@ export const translations = {
 
   // ===== HERO =====
   hero_available: { en: 'Available for new projects', id: 'Lagi buka proyek baru' },
-  hero_we_build: { en: 'Tired of', id: 'Bosen website' },
-  hero_websites: { en: 'boring websites?', id: 'biasa-biasa aja?' },
+  hero_boring_web_1: { en: 'Tired of', id: 'Bosen website' },
+  hero_boring_web_2: { en: 'boring websites?', id: 'biasa-biasa aja?' },
+  hero_boring_app_1: { en: 'Tired of', id: 'Bosen aplikasi' },
+  hero_boring_app_2: { en: 'boring apps?', id: 'biasa-biasa aja?' },
   hero_that_people: { en: "Let's make", id: 'Sini bikin' },
   hero_remember: { en: 'something different.', id: 'yang beda.' },
   hero_subtitle: {
-    en: 'Premium web development studio crafting digital experiences that elevate your brand, increase trust, and drive results.',
-    id: 'Studio pengembangan web yang bantu brand kamu terlihat lebih profesional, dipercaya, dan pastinya cuan.'
+    en: 'Premium web & mobile app development studio crafting digital experiences that elevate your brand, increase trust, and drive results.',
+    id: 'Studio pengembangan web & aplikasi mobile yang bantu brand kamu terlihat lebih profesional, dipercaya, dan pastinya cuan.'
   },
   hero_start_project: { en: 'Start a Project', id: 'Mulai Proyek' },
   hero_view_work: { en: 'View Work', id: 'Lihat Karya' },
@@ -71,6 +73,22 @@ export const translations = {
     en: 'Fix, update, or develop features for existing website.',
     id: 'Perbaikan, update, atau tambah fitur website lama.'
   },
+  service_android_title: { en: 'Android App (APK)', id: 'Aplikasi Android (APK)' },
+  service_android_desc: {
+    en: 'Native Android apps ready to publish on Google Play Store.',
+    id: 'Aplikasi Android native siap publish ke Google Play Store.'
+  },
+  service_ios_title: { en: 'iOS App', id: 'Aplikasi iOS' },
+  service_ios_desc: {
+    en: 'Sleek iPhone & iPad apps following Apple design guidelines.',
+    id: 'Aplikasi iPhone & iPad sesuai panduan desain Apple.'
+  },
+  service_crossplatform_title: { en: 'Cross-Platform App', id: 'Aplikasi Cross-Platform' },
+  service_crossplatform_desc: {
+    en: 'One codebase, two platforms — Android and iOS simultaneously.',
+    id: 'Satu codebase, dua platform — Android dan iOS sekaligus.'
+  },
+
 
   // ===== PORTFOLIO =====
   portfolio_eyebrow: { en: 'Selected Work', id: 'Karya Pilihan' },
@@ -124,6 +142,9 @@ export const translations = {
     en: "Every project is unique. I'll determine the price based on your needs, complexity, and timeline.",
     id: 'Tiap proyek beda-beda. Harganya saya tentuin dari kebutuhan, tingkat kesulitan, dan waktunya.'
   },
+  pricing_filter_all: { en: 'All', id: 'Semua' },
+  pricing_filter_web: { en: 'Web', id: 'Web' },
+  pricing_filter_mobile: { en: 'Mobile App', id: 'Aplikasi Mobile' },
   pricing_free_consultation: { en: 'Free consultation', id: 'Konsultasi gratis' },
   pricing_consultation_text: {
     en: "Discuss your project, I'll help estimate the cost",
@@ -377,6 +398,21 @@ export const translations = {
   faq_description: {
     en: 'Everything you need to know before starting your project.',
     id: 'Hal-hal yang sering ditanyain sebelum mulai proyek.'
+  },
+  faq_q7: { en: 'Can you build mobile apps (APK/iOS)?', id: 'Bisa bikin aplikasi mobile (APK/iOS)?' },
+  faq_a7: {
+    en: 'Yes! We build native Android, iOS, and cross-platform apps using Flutter, Kotlin, or Swift. We also handle Play Store and App Store publishing.',
+    id: 'Bisa! Kami bikin aplikasi Android native, iOS, dan cross-platform pakai Flutter, Kotlin, atau Swift. Kami juga bantu proses publish ke Play Store & App Store.'
+  },
+  faq_q8: { en: 'How much does a mobile app cost?', id: 'Berapa biaya bikin aplikasi mobile?' },
+  faq_a8: {
+    en: 'Starts from Rp 8 million for a simple Android app. Cross-platform (Android + iOS) starts from Rp 15 million. Final price depends on features and complexity.',
+    id: 'Mulai dari Rp 8 juta untuk aplikasi Android sederhana. Cross-platform (Android + iOS) mulai dari Rp 15 juta. Harga final tergantung fitur dan kompleksitas.'
+  },
+  faq_q9: { en: 'Can I have a website AND a mobile app?', id: 'Bisa punya website DAN aplikasi mobile sekaligus?' },
+  faq_a9: {
+    en: 'Absolutely. We offer web + app bundle packages that share the same backend and database, saving you up to 30% compared to building them separately.',
+    id: 'Tentu. Kami punya paket bundling web + app yang berbagi backend & database yang sama, hemat sampai 30% dibanding bikin terpisah.'
   },
 
   // ===== FAQ QUESTIONS & ANSWERS =====
