@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FiCheck, FiMessageCircle, FiMail } from 'react-icons/fi';
@@ -12,21 +12,38 @@ gsap.registerPlugin(ScrollTrigger);
 const Pricing = () => {
   const cardsRef = useRef(null);
   const { t } = useTranslation();
+  const [filter, setFilter] = useState('all');
 
+  // ✅ FIX: pakai === bukan ---
+  const filteredServices = services.filter(
+    (s) => filter === 'all' || s.category === filter
+  );
+
+  // Animasi GSAP — re-run setiap filter berubah
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const cards = cardsRef.current.querySelectorAll('.pricing-card');
+      const cards = cardsRef.current?.querySelectorAll('.pricing-card');
+      if (!cards || cards.length === 0) return;
+
       gsap.fromTo(cards,
         { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: 0.6,
           ease: 'power4.out',
-          stagger: 0.1,
-          scrollTrigger: { trigger: cardsRef.current, start: 'top 80%' }
+          stagger: 0.08,
         }
       );
+    }, cardsRef);
+
+    return () => ctx.revert();
+  }, [filter]); // ⬅️ re-run pas filter ganti
+
+  // ScrollTrigger terpisah — sekali aja
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      ScrollTrigger.refresh();
     }, cardsRef);
 
     return () => ctx.revert();
@@ -45,6 +62,12 @@ const Pricing = () => {
     const url = `mailto:${contactInfo.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.open(url, '_blank');
   };
+
+  const filterTabs = [
+    { key: 'all', label: t('pricing_filter_all') },
+    { key: 'web', label: t('pricing_filter_web') },
+    { key: 'mobile', label: t('pricing_filter_mobile') },
+  ];
 
   return (
     <section id="pricing" className="py-24 md:py-32 lg:py-40 bg-offwhite">
@@ -72,9 +95,26 @@ const Pricing = () => {
           </a>
         </div>
 
+        {/* ✅ Filter Tabs — BARU */}
+        <div className="mt-12 flex justify-center gap-2 flex-wrap">
+          {filterTabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setFilter(tab.key)}
+              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                filter === tab.key
+                  ? 'bg-black text-white shadow-md'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
         {/* Services list */}
-        <div ref={cardsRef} className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.map((service) => (
+        <div ref={cardsRef} className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {filteredServices.map((service) => (
             <div 
               key={service.id}
               className="pricing-card bg-white border border-gray-200 rounded-lg p-8 flex flex-col hover:border-black transition-colors group"
@@ -119,6 +159,13 @@ const Pricing = () => {
             </div>
           ))}
         </div>
+
+        {/* Empty state — kalau filter nggak ada hasil */}
+        {filteredServices.length === 0 && (
+          <div className="mt-8 text-center py-16 text-gray-400">
+            <p className="text-sm">No services found.</p>
+          </div>
+        )}
 
         {/* Bottom note */}
         <div className="mt-12 text-center">
