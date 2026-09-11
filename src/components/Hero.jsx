@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi';
 import { useTranslation } from '../hooks/useTranslation';
@@ -8,6 +8,50 @@ const Hero = () => {
   const previewRef = useRef(null);
   const { t } = useTranslation();
 
+  // ⬇️ Typewriter: cuma baris 1 yang ganti
+  const rotatingTexts = [
+    t('hero_boring_web_1'),   // "Bosen website"
+    t('hero_boring_app_1'),   // "Bosen aplikasi"
+  ];
+
+  const [displayText, setDisplayText] = useState('');
+  const [textIndex, setTextIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // ==================== TYPEWRITER LOGIC ====================
+  useEffect(() => {
+    const currentFullText = rotatingTexts[textIndex];
+
+    // Ngetik
+    if (!isDeleting && displayText.length < currentFullText.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(currentFullText.slice(0, displayText.length + 1));
+      }, 70);
+      return () => clearTimeout(timeout);
+    }
+
+    // Selesai ngetik → tahan
+    if (!isDeleting && displayText.length === currentFullText.length) {
+      const timeout = setTimeout(() => setIsDeleting(true), 1800);
+      return () => clearTimeout(timeout);
+    }
+
+    // Hapus
+    if (isDeleting && displayText.length > 0) {
+      const timeout = setTimeout(() => {
+        setDisplayText(currentFullText.slice(0, displayText.length - 1));
+      }, 35);
+      return () => clearTimeout(timeout);
+    }
+
+    // Selesai hapus → ganti text
+    if (isDeleting && displayText.length === 0) {
+      setIsDeleting(false);
+      setTextIndex((prev) => (prev + 1) % rotatingTexts.length);
+    }
+  }, [displayText, isDeleting, textIndex, rotatingTexts]);
+
+  // ==================== GSAP ANIMATION ====================
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
@@ -79,13 +123,13 @@ const Hero = () => {
 
       const handleMouseMove = (e) => {
         if (!previewRef.current) return;
-        
+
         const { clientX, clientY } = e;
         const { innerWidth, innerHeight } = window;
-        
+
         const xPercent = (clientX / innerWidth - 0.5) * 2;
         const yPercent = (clientY / innerHeight - 0.5) * 2;
-        
+
         gsap.to(previewRef.current, {
           x: xPercent * 8,
           y: yPercent * 6,
@@ -107,14 +151,14 @@ const Hero = () => {
   }, []);
 
   return (
-    <section 
-      ref={heroRef} 
+    <section
+      ref={heroRef}
       className="relative min-h-screen flex flex-col overflow-hidden bg-white"
     >
       {/* Background grid */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#f5f5f5_1px,transparent_1px),linear-gradient(to_bottom,#f5f5f5_1px,transparent_1px)] bg-[size:60px_60px] opacity-30"></div>
-        
+
         <div className="absolute left-[25%] top-0 w-px h-full bg-gray-100 hidden lg:block"></div>
         <div className="absolute left-[50%] top-0 w-px h-full bg-gray-100 hidden lg:block"></div>
         <div className="absolute left-[75%] top-0 w-px h-full bg-gray-100 hidden lg:block"></div>
@@ -122,7 +166,7 @@ const Hero = () => {
 
       <div className="container relative mx-auto px-6 md:px-8 lg:px-12 max-w-[1400px] z-10 flex-1 flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center pt-28 lg:pt-24 pb-16 lg:pb-24">
-          
+
           <div className="lg:col-span-6">
             <div className="hero-editorial-label flex items-center gap-4 mb-6 lg:mb-8">
               <span className="w-8 h-px bg-black"></span>
@@ -133,21 +177,30 @@ const Hero = () => {
             </div>
 
             <h1 className="hero-headline text-[clamp(2.8rem,6vw,6.5rem)] font-heading font-extrabold leading-[1.05] tracking-tight text-black">
-              <span className="block overflow-hidden pb-2 -mb-2">
+
+              {/* Baris 1: TYPEWRITER — "Bosen website" ↔ "Bosen aplikasi" */}
+              <span className="block overflow-hidden pb-2 -mb-2 min-h-[1.1em]">
                 <span className="hero-headline-line block">
-                  {t('hero_we_build')}
+                  {displayText}
+                  <span className="typewriter-cursor" aria-hidden="true">|</span>
                 </span>
               </span>
+
+              {/* Baris 2: STATIS — "biasa-biasa aja?" */}
               <span className="block overflow-hidden pb-2 -mb-2">
-                <span className="hero-headline-line block">
-                  {t('hero_websites')}
+                <span className="hero-headline-line block text-gray-400">
+                  {t('hero_boring_web_2')}
                 </span>
               </span>
+
+              {/* Baris 3: "Sini bikin" — blink */}
               <span className="block overflow-hidden pb-2 -mb-2">
                 <span className="hero-headline-line block text-gray-400">
                   <span className="hero-blink-text">{t('hero_that_people')} </span>
                 </span>
               </span>
+
+              {/* Baris 4: "yang beda." */}
               <span className="block overflow-hidden pb-2 -mb-2">
                 <span className="hero-headline-line block">
                   {t('hero_remember')}
@@ -160,16 +213,16 @@ const Hero = () => {
             </p>
 
             <div className="hero-cta mt-8 hidden md:flex items-center gap-8">
-              <a 
-                href="#contact" 
+              <a
+                href="#contact"
                 className="hero-cta-primary group inline-flex items-center gap-3 bg-black text-white px-7 py-3.5 text-sm uppercase tracking-wider font-medium transition-colors hover:bg-gray-800"
               >
                 {t('hero_start_project')}
                 <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-2" />
               </a>
-              
-              <a 
-                href="#work" 
+
+              <a
+                href="#work"
                 className="hero-cta-secondary group inline-flex items-center gap-2 text-sm uppercase tracking-wider font-medium text-black relative"
               >
                 {t('hero_view_work')}
@@ -185,7 +238,7 @@ const Hero = () => {
               <span>04</span>
             </div>
 
-            <div 
+            <div
               ref={previewRef}
               className="hero-preview-wrapper relative"
               style={{ perspective: '1000px' }}
@@ -201,7 +254,7 @@ const Hero = () => {
                     galvinalfito.my.id
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-100 aspect-[16/10] md:aspect-[16/9]">
                   <iframe
                     src="https://galvinalfito.my.id"
@@ -217,20 +270,20 @@ const Hero = () => {
             <div className="hero-micro-info mt-3 flex justify-between text-[9px] md:text-[10px] uppercase tracking-widest text-gray-400">
               <span>Design</span>
               <span>Development</span>
-              <span>Interaction</span>
+              <span>Mobile App</span>
             </div>
 
             <div className="hero-cta mt-6 flex md:hidden flex-col gap-3">
-              <a 
-                href="#contact" 
+              <a
+                href="#contact"
                 className="hero-cta-primary group inline-flex items-center justify-center gap-3 bg-black text-white px-6 py-4 text-sm uppercase tracking-wider font-medium"
               >
                 {t('hero_start_project')}
                 <FiArrowRight className="w-4 h-4" />
               </a>
-              
-              <a 
-                href="#work" 
+
+              <a
+                href="#work"
                 className="hero-cta-secondary group inline-flex items-center justify-center gap-2 text-sm uppercase tracking-wider font-medium text-black"
               >
                 {t('hero_view_work')}
@@ -240,7 +293,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* MARQUEE - SEAMLESS */}
+      {/* MARQUEE */}
       <div className="hero-marquee relative border-t border-b border-gray-200 overflow-hidden py-3 bg-white">
         <div className="hero-marquee-track">
           <div className="hero-marquee-content">
@@ -248,9 +301,9 @@ const Hero = () => {
             <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
             <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">WEB DESIGN</span>
             <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
-            <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">DEVELOPMENT</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">MOBILE APPS</span>
             <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
-            <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">DIGITAL EXPERIENCE</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">DEVELOPMENT</span>
             <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
           </div>
           <div className="hero-marquee-content" aria-hidden="true">
@@ -258,9 +311,9 @@ const Hero = () => {
             <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
             <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">WEB DESIGN</span>
             <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
-            <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">DEVELOPMENT</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-black tracking-wider px-6">MOBILE APPS</span>
             <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
-            <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">DIGITAL EXPERIENCE</span>
+            <span className="text-xl md:text-3xl font-heading font-bold text-gray-400 tracking-wider px-6">DEVELOPMENT</span>
             <span className="text-gray-300 text-xl md:text-3xl px-4">—</span>
           </div>
         </div>
@@ -288,6 +341,17 @@ const Hero = () => {
           flex-shrink: 0;
           display: flex;
           align-items: center;
+        }
+        .typewriter-cursor {
+          display: inline-block;
+          margin-left: 4px;
+          font-weight: 300;
+          animation: blinkCursor 0.8s step-end infinite;
+          color: black;
+        }
+        @keyframes blinkCursor {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
       `}</style>
     </section>
