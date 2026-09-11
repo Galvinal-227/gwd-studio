@@ -11,6 +11,7 @@ export const services = [
       'SEO basic',
     ],
     timeline: '1-2 minggu',
+    category: 'web',
   },
   {
     id: '02',
@@ -24,6 +25,7 @@ export const services = [
       'SEO lengkap',
     ],
     timeline: '2-4 minggu',
+    category: 'web',
   },
   {
     id: '03',
@@ -37,6 +39,7 @@ export const services = [
       'Manajemen stok',
     ],
     timeline: '4-8 minggu',
+    category: 'web',
   },
   {
     id: '04',
@@ -50,6 +53,7 @@ export const services = [
       'Deployment & setup',
     ],
     timeline: 'Custom',
+    category: 'web',
   },
   {
     id: '05',
@@ -63,5 +67,50 @@ export const services = [
       'Backup & recovery',
     ],
     timeline: 'Flexible',
+    category: 'web',
+  },
+
+  // ==================== MOBILE APP ====================
+  {
+    id: '06',
+    title: 'Android App (APK)',
+    description: 'Aplikasi Android native siap publish ke Google Play Store.',
+    features: [
+      'Flutter / Kotlin',
+      'Push notification',
+      'Offline mode',
+      'Siap publish Play Store',
+      'Play Store submission',
+    ],
+    timeline: '4-8 minggu',
+    category: 'mobile',
+  },
+  {
+    id: '07',
+    title: 'iOS App',
+    description: 'Aplikasi iPhone & iPad sesuai Apple Human Interface Guidelines.',
+    features: [
+      'Swift / Flutter',
+      'Desain iOS native',
+      'Push notification',
+      'App Store submission',
+      'TestFlight beta',
+    ],
+    timeline: '4-8 minggu',
+    category: 'mobile',
+  },
+  {
+    id: '08',
+    title: 'Cross-Platform App',
+    description: 'Satu codebase, dua platform. Android & iOS sekaligus.',
+    features: [
+      'Android + iOS',
+      'Single codebase (Flutter)',
+      'Sinkron dengan website',
+      'Push notification',
+      'Hemat biaya 40%',
+    ],
+    timeline: '6-12 minggu',
+    category: 'mobile',
   },
 ];
