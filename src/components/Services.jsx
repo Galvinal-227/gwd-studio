@@ -1,19 +1,19 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, Zap, Globe, ShoppingCart, Code2, PenTool, Wrench } from 'lucide-react';
+import { ArrowUpRight, Code2 } from 'lucide-react';
 import { services } from '../data/services';
 import SectionHeader from './SectionHeader';
 import { useTranslation } from '../hooks/useTranslation';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const WHATSAPP_NUMBER = '6285801003353';
+
 const Services = () => {
   const sectionRef = useRef(null);
   const listRef = useRef(null);
-  const { t } = useTranslation();
-
-  const icons = [Zap, Globe, ShoppingCart, Code2, PenTool, Wrench];
+  const { t, lang } = useTranslation();
 
   const serviceTitleKeys = [
     'service_landing_title',
@@ -21,6 +21,9 @@ const Services = () => {
     'service_ecommerce_title',
     'service_webapp_title',
     'service_maintenance_title',
+    'service_android_title',
+    'service_ios_title',
+    'service_crossplatform_title',
   ];
 
   const serviceDescKeys = [
@@ -29,6 +32,9 @@ const Services = () => {
     'service_ecommerce_desc',
     'service_webapp_desc',
     'service_maintenance_desc',
+    'service_android_desc',
+    'service_ios_desc',
+    'service_crossplatform_desc',
   ];
 
   useLayoutEffect(() => {
@@ -85,6 +91,18 @@ const Services = () => {
     return () => ctx.revert();
   }, []);
 
+  // ==================== HANDLE KLIK → WA ====================
+  const handleServiceClick = (service) => {
+    const serviceName = t(serviceTitleKeys[service.id - 1]) || service.title;
+
+    const message = lang === 'id'
+      ? `Halo GWD Studio, saya tertarik dengan layanan *${serviceName}*.\n\nBisa info lebih lanjut tentang estimasi biaya dan proses pengerjaannya?`
+      : `Hello GWD Studio, I'm interested in your *${serviceName}* service.\n\nCould you share more info about pricing and timeline?`;
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <section ref={sectionRef} id="services" className="relative py-24 md:py-32 lg:py-40 bg-white">
       {/* Progress bar kiri */}
@@ -101,11 +119,20 @@ const Services = () => {
 
         <div ref={listRef} className="mt-16 border-t border-gray-200">
           {services.map((service, index) => {
-            const IconComponent = icons[index] || Code2;
+            const IconComponent = service.icon || Code2;
 
             return (
               <div
                 key={service.id}
+                onClick={() => handleServiceClick(service)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleServiceClick(service);
+                  }
+                }}
                 className="service-row group relative border-b border-gray-200 py-10 md:py-14 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start cursor-pointer hover:bg-gray-50 transition-colors duration-300 px-2 md:px-4 -mx-2 md:-mx-4"
               >
                 {/* Nomor */}
