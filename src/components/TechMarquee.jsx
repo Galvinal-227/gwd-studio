@@ -5,43 +5,51 @@ import {
   SiTypescript, SiFramer, SiNodedotjs, SiExpress, SiPostgresql,
   SiFirebase, SiGit, SiFigma, SiJavascript, SiHtml5,
   SiVercel, SiSupabase, SiPrisma, SiFlutter, SiDart, SiAstro,
-  SiPython, SiMysql, SiRedis, SiDocker
+  SiPython, SiMysql, SiRedis, SiDocker, SiKotlin, SiSwift, SiApple, SiGoogleplay, SiExpo
 } from 'react-icons/si';
 import { TbBrandGolang } from 'react-icons/tb';
 import { IoLogoCss3 } from "react-icons/io";
+import { FaFlutter } from "react-icons/fa6";
 
 const TechMarquee = () => {
   const marqueeRef = useRef(null);
 
   const technologies = [
-    { icon: SiReact, name: 'React' },
-    { icon: SiNextdotjs, name: 'Next.js' },
-    { icon: SiVite, name: 'Vite' },
-    { icon: SiAstro, name: 'Astro' },
-    { icon: SiTailwindcss, name: 'Tailwind CSS' },
-    { icon: SiMongodb, name: 'MongoDB' },
-    { icon: SiMysql, name: 'MySQL' },
-    { icon: SiPostgresql, name: 'PostgreSQL' },
-    { icon: SiSupabase, name: 'Supabase' },
-    { icon: SiFirebase, name: 'Firebase' },
-    { icon: SiPrisma, name: 'Prisma' },
-    { icon: SiTypescript, name: 'TypeScript' },
-    { icon: SiJavascript, name: 'JavaScript' },
-    { icon: SiHtml5, name: 'HTML5' },
-    { icon: IoLogoCss3, name: 'CSS3' },
-    { icon: SiNodedotjs, name: 'Node.js' },
-    { icon: SiExpress, name: 'Express' },
-    { icon: SiFlutter, name: 'Flutter' },
-    { icon: SiDart, name: 'Dart' },
-    { icon: SiPython, name: 'Python' },
-    { icon: SiFramer, name: 'Framer Motion' },
-    { icon: SiGit, name: 'Git' },
-    { icon: SiFigma, name: 'Figma' },
-    { icon: SiVercel, name: 'Vercel' },
-    { icon: SiDocker, name: 'Docker' },
-    { icon: SiRedis, name: 'Redis' },
-    { icon: TbBrandGolang, name: 'Go' },
-  ];
+  { icon: SiReact, name: 'React' },
+  { icon: SiNextdotjs, name: 'Next.js' },
+  { icon: SiVite, name: 'Vite' },
+  { icon: SiAstro, name: 'Astro' },
+  { icon: SiTailwindcss, name: 'Tailwind CSS' },
+  { icon: SiTypescript, name: 'TypeScript' },
+  { icon: SiJavascript, name: 'JavaScript' },
+  { icon: SiHtml5, name: 'HTML5' },
+  { icon: IoLogoCss3, name: 'CSS3' },
+  { icon: SiFramer, name: 'Framer Motion' },
+  { icon: SiFlutter, name: 'Flutter' },
+  { icon: SiDart, name: 'Dart' },
+  { icon: SiKotlin, name: 'Kotlin' },
+  { icon: SiSwift, name: 'Swift' },
+  { icon: SiReact, name: 'React Native' },
+  { icon: SiExpo, name: 'Expo' },
+  { icon: SiApple, name: 'iOS' },
+  { icon: SiGoogleplay, name: 'Android' },
+  { icon: SiNodedotjs, name: 'Node.js' },
+  { icon: SiExpress, name: 'Express' },
+  { icon: SiPython, name: 'Python' },
+  { icon: TbBrandGolang, name: 'Go' },
+  { icon: SiMongodb, name: 'MongoDB' },
+  { icon: SiMysql, name: 'MySQL' },
+  { icon: SiPostgresql, name: 'PostgreSQL' },
+  { icon: SiSupabase, name: 'Supabase' },
+  { icon: SiFirebase, name: 'Firebase' },
+  { icon: SiPrisma, name: 'Prisma' },
+  { icon: SiRedis, name: 'Redis' },
+  { icon: SiGit, name: 'Git' },
+  { icon: SiFigma, name: 'Figma' },
+  { icon: SiVercel, name: 'Vercel' },
+  { icon: SiDocker, name: 'Docker' },
+  { icon: FaFlutter, name: 'Flutter' },
+];
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
