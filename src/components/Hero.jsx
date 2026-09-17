@@ -165,9 +165,9 @@ const Hero = () => {
       </div>
 
       <div className="container relative mx-auto px-6 md:px-8 lg:px-12 max-w-[1400px] z-10 flex-1 flex flex-col justify-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center pt-28 lg:pt-24 pb-16 lg:pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center pt-28 lg:pt-24 pb-16 lg:pb-24">
 
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-7">
             <div className="hero-editorial-label flex items-center gap-4 mb-6 lg:mb-8">
               <span className="w-8 h-px bg-black"></span>
               <span className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-gray-500">
@@ -231,7 +231,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-6 relative">
+          <div className="lg:col-span-5 relative lg:translate-x-6">
             <div className="hero-micro-info absolute -top-8 -left-2 hidden lg:flex items-center gap-2 text-[10px] uppercase tracking-widest text-gray-400">
               <span className="text-black font-bold">01</span>
               <span>/</span>
