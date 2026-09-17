@@ -93,19 +93,41 @@ const Process = () => {
             </div>
           </div>
 
-          {/* Right - Sticky visual */}
-          <div className="hidden lg:block relative">
-            <div className="sticky top-24 bg-gray-50 border border-gray-200 rounded-lg p-8 min-h-[350px] flex items-center justify-center">
-              <div className="text-center">
-                <span className="text-7xl font-heading font-bold text-gray-200">
+        {/* Right - Sticky visual */}
+        <div className="hidden lg:block relative">
+          <div className="sticky top-24 bg-gray-50 border border-gray-200 rounded-lg p-8 min-h-[350px] flex items-center justify-center">
+            <div className="w-full">
+              <div className="flex items-start justify-between mb-8">
+                <span className="text-7xl font-heading font-bold text-gray-200 leading-none">
                   {processSteps[activeStep]?.id || '01'}
                 </span>
-                <h4 className="text-2xl font-heading font-semibold mt-4">
-                  {t(`process_${processSteps[activeStep]?.title?.toLowerCase()}`) || processSteps[activeStep]?.title}
-                </h4>
-                <p className="mt-2 text-gray-600 max-w-sm leading-relaxed">
-                  {t(`process_${processSteps[activeStep]?.title?.toLowerCase()}_desc`) || processSteps[activeStep]?.description}
-                </p>
+        
+                <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400">
+                  {t('process_deliverable')}: 
+                  <span className="text-black ml-1">
+                    {processSteps[activeStep]?.deliverable}
+                  </span>
+                </span>
+              </div>
+        
+              <h4 className="text-3xl font-heading font-bold tracking-tight">
+                {t(`process_${processSteps[activeStep]?.title?.toLowerCase()}`) ||
+                  processSteps[activeStep]?.title}
+              </h4>
+        
+              <p className="mt-4 text-gray-600 max-w-md leading-relaxed">
+                {t(`process_${processSteps[activeStep]?.title?.toLowerCase()}_desc`) ||
+                  processSteps[activeStep]?.description}
+              </p>
+        
+              <div className="mt-8 pt-4 border-t border-gray-200 flex items-center justify-between">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400">
+                  Process
+                </span>
+        
+                <span className="text-sm font-mono text-gray-400">
+                  {String(activeStep + 1).padStart(2, '0')} / {String(processSteps.length).padStart(2, '0')}
+                </span>
               </div>
             </div>
           </div>
