@@ -8,21 +8,18 @@ const Hero = () => {
   const previewRef = useRef(null);
   const { t } = useTranslation();
 
-  // ⬇️ Typewriter: cuma baris 1 yang ganti
   const rotatingTexts = [
-    t('hero_boring_web_1'),   // "Bosen website"
-    t('hero_boring_app_1'),   // "Bosen aplikasi"
+    t('hero_boring_web_1'),
+    t('hero_boring_app_1'),
   ];
 
   const [displayText, setDisplayText] = useState('');
   const [textIndex, setTextIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // ==================== TYPEWRITER LOGIC ====================
   useEffect(() => {
     const currentFullText = rotatingTexts[textIndex];
 
-    // Ngetik
     if (!isDeleting && displayText.length < currentFullText.length) {
       const timeout = setTimeout(() => {
         setDisplayText(currentFullText.slice(0, displayText.length + 1));
