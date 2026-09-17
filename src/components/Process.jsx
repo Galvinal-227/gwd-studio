@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect, useMemo, useCallback } from 'react';
+import { useState, useRef, useLayoutEffect, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { processSteps } from '../data/process';
@@ -17,12 +17,21 @@ const Process = () => {
   const currentStep = processSteps[activeStep];
 
   // Helper terpusat untuk terjemahan step
+  // field: 'title' | 'description'
   const translateStep = useCallback(
-    (step, field = 'title') => {
+    (step, field) => {
       const key = getStepKey(step);
-      if (!key) return '';
-      const translationKey = field === 'title' ? `process_${key}` : `process_${key}_${field}`;
-      return t(translationKey) || step?.[field] || '';
+      if (!key || !step) return '';
+
+      // Mapping: field di data -> suffix translation key
+      const suffixMap = {
+        title: '',
+        description: '_desc',
+      };
+      const suffix = suffixMap[field] ?? `_${field}`;
+
+      const translationKey = `process_${key}${suffix}`;
+      return t(translationKey) || step[field] || '';
     },
     [t]
   );
@@ -67,21 +76,6 @@ const Process = () => {
     return () => ctx.revert();
   }, []);
 
-  const renderStepContent = (step) => (
-    <>
-      <span className="text-sm font-mono text-gray-400">{step.id}</span>
-      <h3 className="text-3xl md:text-4xl font-heading font-bold tracking-tight mt-2">
-        {translateStep(step, 'title')}
-      </h3>
-      <p className="mt-3 text-gray-600 max-w-md leading-relaxed">
-        {translateStep(step, 'desc') || step.description}
-      </p>
-      <p className="mt-3 text-[10px] uppercase tracking-[0.2em] text-gray-400">
-        {t('process_deliverable')}: {step.deliverable}
-      </p>
-    </>
-  );
-
   return (
     <section
       ref={sectionRef}
@@ -125,12 +119,14 @@ const Process = () => {
                       }`}
                     />
 
-                    <span className="text-sm font-mono text-gray-400">{step.id}</span>
+                    <span className="text-sm font-mono text-gray-400">
+                      {step.id}
+                    </span>
                     <h3 className="text-3xl md:text-4xl font-heading font-bold tracking-tight mt-2">
                       {translateStep(step, 'title')}
                     </h3>
                     <p className="mt-3 text-gray-600 max-w-md leading-relaxed">
-                      {translateStep(step, 'desc') || step.description}
+                      {translateStep(step, 'description')}
                     </p>
                     <p className="mt-3 text-[10px] uppercase tracking-[0.2em] text-gray-400">
                       {t('process_deliverable')}: {step.deliverable}
@@ -152,7 +148,7 @@ const Process = () => {
                   {translateStep(currentStep, 'title')}
                 </h4>
                 <p className="mt-2 text-gray-600 max-w-sm leading-relaxed">
-                  {translateStep(currentStep, 'desc') || currentStep?.description}
+                  {translateStep(currentStep, 'description')}
                 </p>
               </div>
             </div>
