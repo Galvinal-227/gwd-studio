@@ -9,7 +9,6 @@ import Hero from './components/Hero';
 import TrustSection from './components/TrustSection';
 import Services from './components/Services';
 import Portfolio from './components/Portfolio';
-import Process from './components/Process';
 import Pricing from './components/Pricing';
 import WhyChooseUs from './components/WhyChooseUs';
 import BlogSection from './components/BlogSection';
@@ -53,7 +52,6 @@ function App() {
             <TrustSection />
             <Services />
             <Portfolio />
-            <Process />
             <Pricing />
             <WhyChooseUs />
             <BlogSection />
