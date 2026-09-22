@@ -13,10 +13,14 @@ export const translations = {
 
   // ===== HERO =====
   hero_available: { en: 'Available for new projects', id: 'Lagi buka proyek baru' },
-  hero_boring_web_1: { en: 'Tired of', id: 'Bosen website' },
-  hero_boring_web_2: { en: 'boring websites?', id: 'biasa-biasa aja?' },
-  hero_boring_app_1: { en: 'Tired of', id: 'Bosen aplikasi' },
-  hero_boring_app_2: { en: 'boring apps?', id: 'biasa-biasa aja?' },
+
+  // Baris 1 — ROTATING (typewriter): dua-duanya harus BEDA
+  hero_boring_web_1: { en: 'Bored of websites', id: 'Bosen website' },
+  hero_boring_app_1: { en: 'Bored of apps', id: 'Bosen aplikasi' },
+
+  // Baris 2 — STATIS (lanjutan/reaksi)
+  hero_boring_web_2: { en: 'that all look the same?', id: 'biasa-biasa aja?' },
+
   hero_that_people: { en: "Let's make", id: 'Sini bikin' },
   hero_remember: { en: 'something different.', id: 'yang beda.' },
   hero_subtitle: {
@@ -88,7 +92,6 @@ export const translations = {
     en: 'One codebase, two platforms — Android and iOS simultaneously.',
     id: 'Satu codebase, dua platform — Android dan iOS sekaligus.'
   },
-
 
   // ===== PORTFOLIO =====
   portfolio_eyebrow: { en: 'Selected Work', id: 'Karya Pilihan' },
