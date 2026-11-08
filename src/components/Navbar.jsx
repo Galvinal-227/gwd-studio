@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { FiMenu, FiX, FiGlobe, FiCpu, FiArrowUpRight } from 'react-icons/fi';
+import { FiMenu, FiX, FiGlobe, FiArrowUpRight } from 'react-icons/fi';
+import { BsOpenai } from "react-icons/bs";
 import { useTranslation } from '../hooks/useTranslation';
 import AIChatbot from './AIChatbot';
 
@@ -88,7 +89,7 @@ const Navbar = () => {
             className="p-1.5 hover:bg-gray-100 rounded-md transition-colors"
             aria-label="AI Chat"
           >
-            <FiCpu className="w-3.5 h-3.5 text-gray-500" />
+            <BsOpenai className="w-3.5 h-3.5 text-gray-500" />
           </button>
 
           <button
@@ -132,7 +133,7 @@ const Navbar = () => {
               className="p-2 -mr-2"
               aria-label="AI Chat"
             >
-              <FiCpu className="w-4 h-4" />
+              <BsOpenai className="w-4 h-4" />
             </button>
           </div>
         </div>
