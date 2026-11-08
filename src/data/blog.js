@@ -1,13 +1,6 @@
-// ============================================
-// BLOG DATA — Fetch dari Dev.to API
-// Cache: 24 jam, ganti tiap tengah malam
-// ============================================
 
 const DEV_TO_API = 'https://dev.to/api/articles';
 
-// ============================================
-// KONFIGURASI
-// ============================================
 const TAGS = ['webdev', 'design', 'flutter'];
 const PER_PAGE = 2;
 
@@ -15,18 +8,14 @@ const CACHE_KEY = 'gwd_blog_cache';
 const CACHE_DATE_KEY = 'gwd_blog_cache_date';
 
 // ============================================
-// HELPER — cek apakah cache masih valid
-// Cache valid kalau tanggal fetch == tanggal hari ini
+// CACHE HELPERS
 // ============================================
+
+const getToday = () => new Date().toLocaleDateString('en-CA');
+
 const isCacheValid = () => {
   try {
-    const cachedDate = localStorage.getItem(CACHE_DATE_KEY);
-    if (!cachedDate) return false;
-
-    // Ambil tanggal hari ini (format YYYY-MM-DD, pakai timezone lokal)
-    const today = new Date().toLocaleDateString('en-CA'); // en-CA = YYYY-MM-DD
-
-    return cachedDate === today;
+    return localStorage.getItem(CACHE_DATE_KEY) === getToday();
   } catch {
     return false;
   }
@@ -43,124 +32,207 @@ const getCachedPosts = () => {
 
 const savePostsToCache = (posts) => {
   try {
-    const today = new Date().toLocaleDateString('en-CA');
     localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
-    localStorage.setItem(CACHE_DATE_KEY, today);
+    localStorage.setItem(CACHE_DATE_KEY, getToday());
   } catch (err) {
-    console.warn('Failed to save blog cache:', err);
+    console.warn('[Blog] Cache save failed:', err);
   }
 };
 
 // ============================================
-// FETCH LIST ARTIKEL (buat BlogSection)
+// NORMALIZE AUTHOR
 // ============================================
+
+const normalizeAuthor = (user = {}) => ({
+  name: user.name || 'Unknown',
+  username: user.username || '',
+  image: user.profile_image_90 || '',
+  url: user.username
+    ? `https://dev.to/${user.username}`
+    : 'https://dev.to',
+});
+
+// ============================================
+// NORMALIZE LIST ARTICLE
+// ============================================
+
+const normalizeListPost = (post, index) => ({
+  id: index + 1,
+  devToId: post.id,
+  slug: post.slug,
+  title: post.title,
+  titleEn: post.title,
+  excerpt: post.description || 'Read the full article on Dev.to',
+  excerptEn: post.description || 'Read the full article on Dev.to',
+  category: post.tag_list?.[0] || 'Tech',
+  categoryEn: post.tag_list?.[0] || 'Tech',
+  date: post.published_at,
+  readTime: `${post.reading_time_minutes || 1} menit`,
+  readTimeEn: `${post.reading_time_minutes || 1} min read`,
+  coverImage: post.cover_image || post.social_image || '',
+  url: post.url || `https://dev.to`,
+  author: normalizeAuthor(post.user),
+});
+
+// ============================================
+// NORMALIZE DETAIL ARTICLE
+// ============================================
+
+const normalizeDetail = (detail) => ({
+  id: detail.id,
+  devToId: detail.id,
+  slug: detail.slug,
+  title: detail.title,
+  description: detail.description || '',
+  bodyHtml: detail.body_html || '',
+  bodyMarkdown: detail.body_markdown || '',
+  coverImage: detail.cover_image || detail.social_image || '',
+  date: detail.published_at,
+  readTime: detail.reading_time_minutes || 1,
+  tags: detail.tag_list || [],
+  url: detail.url || 'https://dev.to',
+  author: normalizeAuthor(detail.user),
+});
+
+// ============================================
+// FETCH HELPER
+// ============================================
+
+const fetchJSON = async (url) => {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`API Error: ${response.status}`);
+  }
+
+  return response.json();
+};
+
+// ============================================
+// FETCH ARTICLE LIST
+// ============================================
+
 export const fetchBlogPosts = async (forceRefresh = false) => {
-  // Kalau nggak force refresh DAN cache masih valid → pakai cache
   if (!forceRefresh && isCacheValid()) {
     const cached = getCachedPosts();
-    if (cached && cached.length) {
-      console.log('[Blog] Using cached posts (from today)');
+
+    if (cached?.length) {
+      console.log('[Blog] Using daily cache');
       return cached;
     }
   }
 
-  console.log('[Blog] Fetching fresh posts from Dev.to...');
+  try {
+    console.log('[Blog] Fetching Dev.to articles...');
 
-  const responses = await Promise.all(
-    TAGS.map((tag) =>
-      fetch(`${DEV_TO_API}?tag=${tag}&per_page=${PER_PAGE}`)
-        .then((res) => res.json())
-        .catch(() => [])
-    )
-  );
+    const responses = await Promise.all(
+      TAGS.map((tag) =>
+        fetchJSON(`${DEV_TO_API}?tag=${tag}&per_page=${PER_PAGE}`)
+      )
+    );
 
-  const allPosts = responses.flat();
-  const uniquePosts = Array.from(
-    new Map(allPosts.map((p) => [p.id, p])).values()
-  );
+    const allPosts = responses.flat();
 
-  uniquePosts.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
+    const uniquePosts = Array.from(
+      new Map(allPosts.map((post) => [post.id, post])).values()
+    );
 
-  const normalized = uniquePosts.map((post, i) => ({
-    id: i + 1,
-    slug: post.slug,
-    title: post.title,
-    titleEn: post.title,
-    excerpt: post.description || 'Read the full article on Dev.to',
-    excerptEn: post.description || 'Read the full article on Dev.to',
-    category: post.tag_list?.[0] || 'Tech',
-    categoryEn: post.tag_list?.[0] || 'Tech',
-    date: post.published_at,
-    readTime: `${post.reading_time_minutes} menit`,
-    readTimeEn: `${post.reading_time_minutes} min read`,
-    coverImage: post.cover_image || post.social_image,
-    url: post.url,
-    author: post.user?.name || 'Unknown',
-    authorImage: post.user?.profile_image_90,
-  }));
+    uniquePosts.sort(
+      (a, b) => new Date(b.published_at) - new Date(a.published_at)
+    );
 
-  savePostsToCache(normalized);
-  return normalized;
+    const normalized = uniquePosts.map(normalizeListPost);
+
+    savePostsToCache(normalized);
+
+    return normalized;
+  } catch (error) {
+    console.warn('[Blog] API failed, using cache:', error);
+
+    const cached = getCachedPosts();
+
+    if (cached?.length) {
+      return cached;
+    }
+
+    throw new Error('Unable to load blog articles');
+  }
 };
 
 // ============================================
-// FETCH 1 ARTIKEL BY SLUG (buat BlogDetail)
+// FETCH ARTICLE DETAIL BY SLUG
 // ============================================
+
 export const fetchBlogPostBySlug = async (slug) => {
-  // Cek cache dulu (biar nggak fetch 2x)
+  if (!slug) {
+    throw new Error('Article slug is required');
+  }
+
   const cached = getCachedPosts();
-  if (cached) {
-    const found = cached.find((p) => p.slug === slug);
-    if (found) {
-      // Fetch detail lengkap by ID
-      const detailRes = await fetch(`${DEV_TO_API}/${found.id}`);
-      if (detailRes.ok) {
-        const detail = await detailRes.json();
-        return normalizeDetail(detail);
-      }
+
+  // Cari artikel dari cache
+  const cachedPost = cached?.find((post) => post.slug === slug);
+
+  // Gunakan ID Dev.to asli, bukan ID internal
+  if (cachedPost?.devToId) {
+    try {
+      console.log('[Blog] Fetching cached article detail');
+
+      const detail = await fetchJSON(
+        `${DEV_TO_API}/${cachedPost.devToId}`
+      );
+
+      return normalizeDetail(detail);
+    } catch (error) {
+      console.warn('[Blog] Detail API failed:', error);
     }
   }
 
-  // Kalau nggak ada di cache, fetch list besar
-  const responses = await Promise.all(
-    TAGS.map((tag) =>
-      fetch(`${DEV_TO_API}?tag=${tag}&per_page=100`)
-        .then((res) => res.json())
-        .catch(() => [])
-    )
-  );
+  // Jika tidak ada di cache, cari melalui API
+  try {
+    console.log('[Blog] Searching article by slug:', slug);
 
-  const allPosts = responses.flat();
-  const uniquePosts = Array.from(
-    new Map(allPosts.map((p) => [p.id, p])).values()
-  );
+    const responses = await Promise.all(
+      TAGS.map((tag) =>
+        fetchJSON(`${DEV_TO_API}?tag=${tag}&per_page=100`)
+      )
+    );
 
-  const post = uniquePosts.find((p) => p.slug === slug);
-  if (!post) throw new Error('Article not found');
+    const allPosts = responses.flat();
 
-  const detailRes = await fetch(`${DEV_TO_API}/${post.id}`);
-  if (!detailRes.ok) throw new Error('Failed to load article detail');
-  const detail = await detailRes.json();
+    const uniquePosts = Array.from(
+      new Map(allPosts.map((post) => [post.id, post])).values()
+    );
 
-  return normalizeDetail(detail);
+    const article = uniquePosts.find((post) => post.slug === slug);
+
+    if (!article) {
+      throw new Error('Article not found');
+    }
+
+    const detail = await fetchJSON(
+      `${DEV_TO_API}/${article.id}`
+    );
+
+    return normalizeDetail(detail);
+  } catch (error) {
+    console.warn('[Blog] API detail unavailable:', error);
+  }
+
+  // FALLBACK: gunakan cache jika API gagal
+  if (cachedPost) {
+    console.log('[Blog] Using cached article fallback');
+
+    return {
+      ...cachedPost,
+      description: cachedPost.excerpt || '',
+      bodyHtml: '',
+      bodyMarkdown: '',
+      readTime: parseInt(cachedPost.readTime, 10) || 1,
+      tags: [cachedPost.category || 'Tech'],
+      author: cachedPost.author || normalizeAuthor(),
+    };
+  }
+
+  throw new Error('Article not found');
 };
-
-const normalizeDetail = (detail) => ({
-  id: detail.id,
-  slug: detail.slug,
-  title: detail.title,
-  description: detail.description,
-  bodyHtml: detail.body_html,
-  bodyMarkdown: detail.body_markdown,
-  coverImage: detail.cover_image || detail.social_image,
-  date: detail.published_at,
-  readTime: detail.reading_time_minutes,
-  tags: detail.tag_list,
-  url: detail.url,
-  author: {
-    name: detail.user?.name || 'Unknown',
-    username: detail.user?.username,
-    image: detail.user?.profile_image_90,
-    url: `https://dev.to/${detail.user?.username}`,
-  },
-});
