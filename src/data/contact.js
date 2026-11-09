@@ -1,5 +1,5 @@
 export const contactInfo = {
-  email: 'akunmasukanweb@gmail.com',
+  email: 'gwdstudio@gmail.com',
   phone: '+6285801003353',
   whatsapp: '+6285801003353',
   location: 'Nganjuk, Indonesia',
