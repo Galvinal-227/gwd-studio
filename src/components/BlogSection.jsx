@@ -297,11 +297,11 @@ const BlogSection = () => {
                 <FiClock className="w-3.5 h-3.5" />
                 {lang === 'id' ? featured.readTime : featured.readTimeEn}
               </span>
-              {featured.author && (
+              {featured.author?.name && (
                 <>
                   <span>·</span>
                   <span className="text-gray-400 normal-case tracking-normal">
-                    {featured.author}
+                    {featured.author.name}
                   </span>
                 </>
               )}
