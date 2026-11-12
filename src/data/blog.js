@@ -1,4 +1,3 @@
-
 const DEV_TO_API = 'https://dev.to/api/articles';
 
 const TAGS = ['webdev', 'design', 'flutter'];
@@ -6,6 +5,42 @@ const PER_PAGE = 2;
 
 const CACHE_KEY = 'gwd_blog_cache';
 const CACHE_DATE_KEY = 'gwd_blog_cache_date';
+
+// ============================================
+// NORMALIZE AUTHOR
+// ============================================
+
+const normalizeAuthor = (user) => {
+  // null / undefined
+  if (!user) {
+    return {
+      name: 'Unknown',
+      username: '',
+      image: '',
+      url: 'https://dev.to',
+    };
+  }
+
+  // cache lama / fallback lama menyimpan author sebagai string
+  if (typeof user === 'string') {
+    return {
+      name: user.trim() || 'Unknown',
+      username: '',
+      image: '',
+      url: 'https://dev.to',
+    };
+  }
+
+  // object (Dev.to raw user, atau hasil normalisasi sebelumnya)
+  return {
+    name: user.name || 'Unknown',
+    username: user.username || '',
+    image: user.profile_image_90 || user.image || '',
+    url: user.username
+      ? `https://dev.to/${user.username}`
+      : 'https://dev.to',
+  };
+};
 
 // ============================================
 // CACHE HELPERS
@@ -24,7 +59,14 @@ const isCacheValid = () => {
 const getCachedPosts = () => {
   try {
     const raw = localStorage.getItem(CACHE_KEY);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return null;
+    // Re-normalize → aman terhadap cache lama (author string, field hilang)
+    return parsed.map((post) => ({
+      ...post,
+      author: normalizeAuthor(post.author),
+    }));
   } catch {
     return null;
   }
@@ -38,19 +80,6 @@ const savePostsToCache = (posts) => {
     console.warn('[Blog] Cache save failed:', err);
   }
 };
-
-// ============================================
-// NORMALIZE AUTHOR
-// ============================================
-
-const normalizeAuthor = (user = {}) => ({
-  name: user.name || 'Unknown',
-  username: user.username || '',
-  image: user.profile_image_90 || '',
-  url: user.username
-    ? `https://dev.to/${user.username}`
-    : 'https://dev.to',
-});
 
 // ============================================
 // NORMALIZE LIST ARTICLE
@@ -230,7 +259,7 @@ export const fetchBlogPostBySlug = async (slug) => {
       bodyMarkdown: '',
       readTime: parseInt(cachedPost.readTime, 10) || 1,
       tags: [cachedPost.category || 'Tech'],
-      author: cachedPost.author || normalizeAuthor(),
+      author: normalizeAuthor(cachedPost.author),
     };
   }
 
